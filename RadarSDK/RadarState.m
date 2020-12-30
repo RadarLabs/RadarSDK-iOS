@@ -17,6 +17,8 @@ static NSString *const kStopped = @"radar-stopped";
 static NSString *const kLastSentAt = @"radar-lastSentAt";
 static NSString *const kCanExit = @"radar-canExit";
 static NSString *const kLastFailedStoppedLocation = @"radar-lastFailedStoppedLocation";
+static NSString *const kLastGeofences = @"radar-lastGeofences";
+static NSString *const kLastBubble = @"radar-lastBubble";
 
 + (CLLocation *)lastMovedLocation {
     NSDictionary *dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kLastMovedLocation];
@@ -91,6 +93,37 @@ static NSString *const kLastFailedStoppedLocation = @"radar-lastFailedStoppedLoc
 
     NSDictionary *dict = [RadarUtils dictionaryForLocation:lastFailedStoppedLocation];
     [[NSUserDefaults standardUserDefaults] setObject:dict forKey:kLastFailedStoppedLocation];
+}
+
++ (void)setLastGeofences:(NSArray<RadarGeofence *> *_Nullable)geofences {
+    [[NSUserDefaults standardUserDefaults] setObject:geofences forKey:kLastGeofences];
+}
+
++ (NSArray<RadarGeofence *> *_Nullable)lastGeofences {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:kLastGeofences];
+}
+
++ (void)setLastBubble:(CLRegion *_Nullable)region {
+    [[NSUserDefaults standardUserDefaults] setObject:region forKey:kLastBubble];
+}
+
++ (CLRegion *_Nullable)lastBubble {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:kLastBubble];
+}
+
++ (void)getState:(RadarStateHandler)stateHandler {
+  if (stateHandler != nil) {
+    stateHandler(
+        [self lastMovedLocation],
+        [self lastMovedAt],
+        [self stopped],
+        [self lastSentAt],
+        [self canExit],
+        [self lastFailedStoppedLocation],
+        [self lastGeofences],
+        [self lastBubble]
+    );
+  }
 }
 
 @end

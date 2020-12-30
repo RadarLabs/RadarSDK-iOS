@@ -7,6 +7,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
+#import "Radar.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,6 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setCanExit:(BOOL)canExit;
 + (CLLocation *)lastFailedStoppedLocation;
 + (void)setLastFailedStoppedLocation:(CLLocation *_Nullable)lastFailedStoppedLocation;
++ (void)setLastGeofences:(NSArray<RadarGeofence *> *_Nullable)geofences;
++ (NSArray<RadarGeofence *> *_Nullable)lastGeofences;
++ (void)setLastBubble:(CLRegion *_Nullable)region;
++ (CLRegion *_Nullable)lastBubble;
++ (void)getState:(RadarStateHandler)stateHandler;
 
 @end
 

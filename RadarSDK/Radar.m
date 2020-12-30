@@ -66,6 +66,10 @@
     [RadarSettings setAdIdEnabled:enabled];
 }
 
++ (void)getState:(RadarStateHandler)stateHandler {
+  [RadarState getState:stateHandler];
+}
+
 + (void)getLocationWithCompletionHandler:(RadarLocationCompletionHandler)completionHandler {
     [[RadarLocationManager sharedInstance] getLocationWithCompletionHandler:^(RadarStatus status, CLLocation *_Nullable location, BOOL stopped) {
         [RadarUtils runOnMainThreadAsyncIfNecessary:^{

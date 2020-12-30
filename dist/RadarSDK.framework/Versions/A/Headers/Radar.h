@@ -200,6 +200,11 @@ typedef void (^_Nonnull RadarIPGeocodeCompletionHandler)(RadarStatus status, Rad
 typedef void (^_Nonnull RadarRouteCompletionHandler)(RadarStatus status, RadarRoutes *_Nullable routes);
 
 /**
+ Called with the current internal state values
+ */
+typedef void (^_Nullable RadarStateHandler)(CLLocation *_Nullable lastMovedLocation, NSDate *_Nullable lastMovedAt, BOOL stopped, NSDate *_Nullable lastSentAt, BOOL canExit, CLLocation *_Nullable lastFailedStoppedLocation, NSArray<RadarGeofence *> *_Nullable lastGeofences, CLRegion *_Nullable lastBubble);
+
+/**
  The main class used to interact with the Radar SDK.
 
  @see https://radar.io/documentation/sdk
@@ -272,6 +277,13 @@ typedef void (^_Nonnull RadarRouteCompletionHandler)(RadarStatus status, RadarRo
  @param enabled A boolean indicating whether `adId` should be collected.
  */
 + (void)setAdIdEnabled:(BOOL)enabled;
+
+/**
+ Gets the device's current internal state.
+
+ @param stateHandler An optional completion handler.
+ */
++ (void)getState:(RadarStateHandler)stateHandler;
 
 /**
  Gets the device's current location.
